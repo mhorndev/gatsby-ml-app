@@ -56,7 +56,7 @@ const Home = ({}) => {
   return (
     <Page>
       <Content>
-        <Heading>Home</Heading>
+        <Heading>Hello.</Heading>
         <Paragraph>This machine learning application is a medical cost risk analysis designed to
           provide an estimated risk cost based on input paramaters.
         </Paragraph>
