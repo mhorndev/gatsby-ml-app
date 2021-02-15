@@ -12,6 +12,12 @@ module.exports = {
       options: {
         component: require.resolve(`./src/components/layout.js`),
       }
-    }
+    },
+    {
+      resolve: `gatsby-plugin-styled-components`,
+      options: {
+        // Add any options here
+      },
+    },
   ]
 }
