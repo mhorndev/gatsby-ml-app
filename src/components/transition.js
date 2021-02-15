@@ -51,9 +51,18 @@ const Transition = ({children}) => {
     }
   }
 
+  function onExitComplete() {
+    if (globalContext.url !== "/") {
+      setGlobalContext(prev => ({...prev, navbar: true}))
+    }
+  }
+
   return (
     <Main>
-      <AnimatePresence initial={false} custom={globalContext.direction}>
+      <AnimatePresence 
+        onExitComplete={onExitComplete} 
+        initial={false} 
+        custom={globalContext.direction}>
         <Page
           id="transition"
           key={children.key}

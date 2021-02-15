@@ -5,23 +5,32 @@ import routes from "./routes"
 import { navigate } from "gatsby"
 import Navbar from "./navbar"
 import Transition from "./transition"
-//import { ThemeProvider } from "styled-components"
-//import { GlobalStyle, lightTheme, darkTheme } from "./theme"
 
 const Layout = ({children, location}) => {
-  const [globalContext,setGlobalContext] = useState({})
+  const [globalContext,setGlobalContext] = useState({ 
+    initial: true,
+    navbar: true,
+  })
 
-  /**
-   * @todo Polyfill for findIndex
-   * This effect determines direction of the transition before render
-   * 
-   */
   useEffect(() => {
+    if (globalContext.initial) {
+      if (location.pathname === "/") {
+        setGlobalContext(prev => ({...prev, navbar: false}))
+      }
+      setGlobalContext(prev => ({...prev, initial: false}))
+      return
+    }
     let next = routes.findIndex(obj => obj.path === globalContext.path)
     let curr = routes.findIndex(obj => obj.path === location.pathname)
     setGlobalContext(prev => ({...prev, direction: next > curr ? 1 : -1}))
-    navigate(globalContext.path)
+    setGlobalContext(prev => ({...prev, navbar: false}))
+    setTimeout(function(){ navigate(globalContext.path) }, 500)
+    console.log("HEY")
   }, [globalContext.path])
+
+  useEffect(() => {
+    console.log(location)
+  }, [])
 
   return (
     <Context.Provider value={{globalContext,setGlobalContext}}>
@@ -34,41 +43,3 @@ const Layout = ({children, location}) => {
 }
 
 export default Layout
-
-/*
-const Layout = ({children}) => {
-
-  const [globalContext,setGlobalContext] = useState({
-    darkMode: JSON.parse(localStorage.darkMode || false),
-  })
-
-  function toggleDarkMode() {
-    setGlobalContext(prev => ({ ...prev, 
-      darkMode: !globalContext.darkMode
-    }))
-  }
-
-  useEffect(() => {
-    console.log(globalContext.darkMode)
-    localStorage.setItem("darkMode", globalContext.darkMode)
-  }, [globalContext.darkMode])
-
-  useEffect(() => {
-    console.log(document.body.style.color)
-  })
-
-  
-
-  return (
-    <Context.Provider value={{globalContext,setGlobalContext}}>
-      <ThemeProvider theme={globalContext.darkMode ? darkTheme : lightTheme}>
-        <GlobalStyle darkMode={globalContext.darkMode}/>
-        <button onClick={toggleDarkMode}>
-          Toggle
-        </button>
-        {children}
-      </ThemeProvider>
-    </Context.Provider>
-  )
-}
-*/

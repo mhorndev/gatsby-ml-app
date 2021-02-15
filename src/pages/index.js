@@ -32,16 +32,17 @@ const Paragraph = styled.p`
 `
 
 const Button = styled.button`
-  color: #FFF; margin: 10px;
+  margin: 10px;
+  color: #FFF; 
   background-color: #000;
   border: none;
+  outline: none;
   padding: 10px;
   cursor: pointer;
+  transition: all 300ms ease;
   &:hover {
     background-color: #BF00FF;
   }
-  transition: all 300ms ease;
-  outline: none;
 `
 
 

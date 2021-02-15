@@ -1,10 +1,11 @@
-import React, { useContext }  from "react"
+import React, { useContext, useState }  from "react"
 import styled from "styled-components"
 import routes from "../components/routes"
 import { Context } from "./context"
 import Brand from "../components/brand"
+import { motion } from "framer-motion"
 
-const Container = styled.div`
+const Container = styled(motion.div)`
   z-index: 10;
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -32,6 +33,7 @@ const Link = styled.a`
 
 const Navbar = ({}) => {
   const {globalContext,setGlobalContext} = useContext(Context)
+  const [visible,setVisible] = useState(false)
 
   function onClick(e,path) {
     e.preventDefault()
@@ -39,7 +41,11 @@ const Navbar = ({}) => {
   }
 
   return (
-    <Container>
+    <Container
+      initial={{y: -100}}
+      animate={{ y: globalContext.navbar ? 0 : -100 }}
+      transition={{ duration: .25 }}
+    >
       <Content>
         <Brand href="/" onClick={e => onClick(e,"/")}>Brand</Brand>
         <Links>
