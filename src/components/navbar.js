@@ -2,6 +2,7 @@ import React, { useContext }  from "react"
 import styled from "styled-components"
 import routes from "../components/routes"
 import { Context } from "./context"
+import Brand from "../components/brand"
 
 const Container = styled.div`
   z-index: 10;
@@ -17,21 +18,16 @@ const Content = styled.div`
   justify-content: space-between;
 `
 
-const Brand = styled.a`
-  color: #000000;
-  text-decoration: none;
-  &:hover { color: #9400D3; }
-`
-
 const Links = styled.div`
   display: flex;
+  align-items: center;
 `
 
 const Link = styled.a`
   margin-left: 20px;
   color: #000000;
   text-decoration: none;
-  &:hover { color: #9400D3; }
+  &:hover { color: #BF00FF; }
 `
 
 const Navbar = ({}) => {

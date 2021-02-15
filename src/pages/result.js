@@ -16,17 +16,17 @@ const Content = styled.div`
 `
 
 const Heading = styled.h1`
-  margin-top: 1em;
+  margin-top: 2em;
 `
 
-const Contact = ({}) => {
+const Result = ({}) => {
   return (
     <Page>
       <Content>
-        <Heading>Let's Talk</Heading>
+        <Heading>Result</Heading>
       </Content>
     </Page>
   )
 }
 
-export default Contact
+export default Result

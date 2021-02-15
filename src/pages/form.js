@@ -16,17 +16,17 @@ const Content = styled.div`
 `
 
 const Heading = styled.h1`
-  margin-top: 1em;
+  margin-top: 2em;
 `
 
-const About = ({}) => {
+const Form = ({}) => {
   return (
     <Page>
       <Content>
-        <Heading>About Me</Heading>
+        <Heading>Form</Heading>
       </Content>
     </Page>
   )
 }
 
-export default About
+export default Form

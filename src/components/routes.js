@@ -1,19 +1,15 @@
 const routes = [
   {
-    name: "Home",
-    path: "/"
+    name: "Form",
+    path: "/form"
   },
   {
-    name: "About",
-    path: "/about/"
+    name: "Result",
+    path: "/result"
   },
   {
-    name: "Portfolio",
-    path: "/portfolio/"
-  },
-  {
-    name: "Contact",
-    path: "/contact/"
+    name: "Analysis",
+    path: "/analysis"
   },
 ]
 

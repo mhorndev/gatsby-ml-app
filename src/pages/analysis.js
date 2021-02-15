@@ -16,17 +16,17 @@ const Content = styled.div`
 `
 
 const Heading = styled.h1`
-  margin-top: 1em;
+  margin-top: 2em;
 `
 
-const Portfolio = ({}) => {
+const Analysis = ({}) => {
   return (
     <Page>
       <Content>
-        <Heading>Portfolio</Heading>
+        <Heading>Analysis</Heading>
       </Content>
     </Page>
   )
 }
 
-export default Portfolio
+export default Analysis
