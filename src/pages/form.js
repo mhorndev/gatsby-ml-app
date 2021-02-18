@@ -1,4 +1,4 @@
-import React, { useState }  from "react"
+import React, { useEffect, useState }  from "react"
 import styled from "styled-components"
 
 const Page = styled.div`
@@ -55,6 +55,62 @@ const Params = {
 const Form = ({}) => {
   const [params,setParams] = useState(Params)  
 
+  function formatHeight() {
+    if (params.height === undefined) return
+    var feet = Math.floor(params.height / 12)
+    var inches = params.height - (feet * 12)
+    return feet + "'" + inches + "\"";
+  }
+
+  function formatWeight() {
+    if (params.weight === undefined) return
+    return params.weight + " lbs"
+  }
+
+  function formatBmi() {
+    if (params.bmi === undefined) return
+    return params.bmi + " (kg/m^2)"
+  }
+
+  function formatState() {
+    if (params.state === undefined) return
+    return states[params.state]
+  }
+
+  function formatChildren() {
+    if (params.children === undefined) return
+    return params.children
+  }
+
+  function formatSex() {
+    if (params.sex === undefined) return
+    return (params.sex === 0 ? "M" : "F")
+  }
+
+  function formatSmoker() {
+    if (params.smoker === undefined) return
+    console.log("not undefined")
+    console.log(params.smoker)
+    return (params.smoker > 0 ? "Y" : "N")
+  }
+
+  function formatAge(value) {
+    if (params.age === undefined) return
+    return params.age
+  }
+
+  useEffect(() => {
+    if (params.height && params.weight) {
+      setParams({...params, 
+        bmi: ((params.weight/params.height/params.height)*703).toFixed(2)
+      })
+    }
+  }, [params.height,params.weight])
+
+  useEffect(() => {
+    console.log(params.smoker)
+  }, [params.smoker])
+
   return (
     <Page>
       <Content>
@@ -64,7 +120,7 @@ const Form = ({}) => {
             <Label>
               <strong>Age:</strong>
               {" "}
-              {params.age}
+              {formatAge(params.age)}
             </Label>
             <Control>
               <input 
@@ -79,7 +135,7 @@ const Form = ({}) => {
             <Label>
               <strong>Height:</strong>
               {" "}
-              {params.height}
+              {formatHeight(params.height)}
             </Label>
             <Control>
               <input 
@@ -94,7 +150,7 @@ const Form = ({}) => {
             <Label>
               <strong>Weight:</strong>
               {" "}
-              {params.weight}
+              {formatWeight(params.weight)}
             </Label>
             <Control>
               <input 
@@ -109,7 +165,7 @@ const Form = ({}) => {
             <Label>
               <strong>BMI:</strong>
               {" "}
-              {params.bmi}
+              {formatBmi(params.bmi)}
             </Label>
             <Control>
               <input 
@@ -122,7 +178,7 @@ const Form = ({}) => {
             <Label>
               <strong>Children:</strong>
               {" "}
-              {params.children}
+              {formatChildren(params.children)}
             </Label>
             <Control>
               <input 
@@ -137,13 +193,13 @@ const Form = ({}) => {
             <Label>
               <strong>State:</strong>
               {" "}
-              {params.state}
+              {formatState(params.state)}
             </Label>
             <Control>
               <input 
-                type="range" class="form-range" id="stateRange" min="0" max="49" value={params.state || 0}
+                type="range" className="form-range" id="stateRange" min="0" max="49" value={params.state || 0}
                 onChange={e => setParams({...params, state: e.target.value})}
-                onMouseDown={e => {if (params.state === undefined){setParams({...params, state: 0})}}}
+                onMouseDown={e => {if (params.state === undefined) {setParams({...params, state: 0})}}}
               />
             </Control>
           </Container>
@@ -152,7 +208,7 @@ const Form = ({}) => {
             <Label>
               <strong>Sex:</strong>
               {" "}
-              {params.sex}
+              {formatSex(params.sex)}
             </Label>
             <Control>
               <input 
@@ -167,11 +223,11 @@ const Form = ({}) => {
             <Label>
               <strong>Smoker:</strong>
               {" "}
-              {params.smoker}
+              {formatSmoker(params.smoker)}
             </Label>
             <Control>
               <input 
-                type="range" class="form-range" id="smokerRange" min="0" max="1" value={params.smoker || 0}
+                type="range" className="form-range" id="smokerRange" min="0" max="1" value={params.smoker || 0}
                 onChange={e => setParams({...params, smoker: e.target.value})}
                 onMouseDown={e => {if (params.smoker === undefined){setParams({...params, smoker: 0})}}}
               />
@@ -189,16 +245,13 @@ const states = [
   "AK",
   "AL",
   "AR",
-  "AS",
   "AZ",
   "CA",
   "CO",
   "CT",
-  "DC",
   "DE",
   "FL",
   "GA",
-  "GU",
   "HI",
   "IA",
   "ID",
@@ -227,7 +280,6 @@ const states = [
   "OK",
   "OR",
   "PA",
-  "PR",
   "RI",
   "SC",
   "SD",
@@ -235,7 +287,6 @@ const states = [
   "TX",
   "UT",
   "VA",
-  "VI",
   "VT",
   "WA",
   "WI",
