@@ -9,3 +9,15 @@
 html, body {
   font-family: Montserrat;
 }
+
+input[type=range]::-webkit-slider-thumb {
+  background: #BF00FF;
+}
+
+input[type=range]::-moz-range-thumb {
+  background: #BF00FF;
+}
+
+input[type=range]::-ms-thumb {
+  background: #BF00FF;
+}

@@ -1,5 +1,6 @@
-import React, { useEffect, useState }  from "react"
+import React, { useEffect, useState, useContext }  from "react"
 import styled from "styled-components"
+import { Context } from "../components/context"
 
 const Page = styled.div`
   position: fixed;
@@ -40,6 +41,55 @@ const Group = styled.div`
   width: 100%;
 `
 
+const ButtonBar = styled.div`
+  display: flex;
+  flex-direction: row;
+`
+
+const SubmitButton = styled.button`
+  color: #FFF;
+  background-color: #000;
+  border: none;
+  outline: none;
+  padding: 10px;
+  cursor: pointer;
+  transition: all 300ms ease;
+  &:hover {
+    background-color: #BF00FF;
+  }
+`
+
+const ResetButton = styled.button`
+  margin-left: 10px; 
+  color: #000;
+  background-color: whitesmoke;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: all 300ms ease;
+  &:hover {
+    color: #FFF;
+    background-color: #888;
+  }
+`
+
+const Flex = styled.div`
+  flex: 1;
+`
+
+const RandomizeButton = styled.button`
+  margin-left: 10px; 
+  color: #FFF;
+  background-color: #000;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: all 300ms ease;
+  &:hover {
+    background-color: #BF00FF;
+  }
+`
+
 const Params = {
   age: undefined,
   height: undefined,
@@ -54,6 +104,7 @@ const Params = {
 
 const Form = ({}) => {
   const [params,setParams] = useState(Params)  
+  const {globalContext,setGlobalContext} = useContext(Context)
 
   function formatHeight() {
     if (params.height === undefined) return
@@ -107,9 +158,29 @@ const Form = ({}) => {
     }
   }, [params.height,params.weight])
 
-  useEffect(() => {
-    console.log(params.smoker)
-  }, [params.smoker])
+  function resetForm() {
+    setParams(Params)
+  }
+
+  function randomizeForm() {
+    setParams({...params, 
+      age: Math.floor(Math.random() * (99 - 18 + 1) + 18),
+      height: Math.floor(Math.random() * (84 - 48) ) + 48,
+      weight: Math.floor(Math.random() * (250 - 95) ) + 95,
+      children: Math.floor(Math.random() * 4),
+      state: Math.floor(Math.random() * 50),
+      region: Math.floor(Math.random() * 4),
+      sex: Math.random() > 0.5 ? 1 : 0,
+      smoker: Math.random() > 0.5 ? 1 : 0,
+    })
+  }
+
+  function submitForm(e, path) {
+    setGlobalContext(prev => ({...prev, params: params}))
+    e.preventDefault()
+    setGlobalContext(prev => ({...prev, path: path}))
+  }
+  
 
   return (
     <Page>
@@ -124,7 +195,7 @@ const Form = ({}) => {
             </Label>
             <Control>
               <input 
-                type="range" class="form-range" id="ageRange" min="18" max="99" value={params.age || 0}
+                type="range" className="form-range" id="ageRange" min="18" max="99" value={params.age || 0}
                 onChange={e => setParams({...params, age: e.target.value})}
                 onMouseDown={e => {if (params.age === undefined){setParams({...params, age: 18})}}}
               />
@@ -235,6 +306,12 @@ const Form = ({}) => {
           </Container>
 
           <hr/>
+
+          <ButtonBar>
+            <SubmitButton onClick={e => submitForm(e,"/result")}>Submit</SubmitButton>
+            <ResetButton onClick={resetForm}>Reset</ResetButton><Flex/>
+            <RandomizeButton onClick={randomizeForm}>Randomize</RandomizeButton>
+          </ButtonBar>
 
       </Content>
     </Page>

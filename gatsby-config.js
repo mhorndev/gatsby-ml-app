@@ -14,6 +14,15 @@ module.exports = {
       }
     },
     {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `data`,
+        path: `${__dirname}/src/data/`,
+        ignore: [`**/\.*`], // ignore files starting with a dot
+      },
+    },
+    `gatsby-transformer-csv`,
+    {
       resolve: `gatsby-plugin-react-helmet`,
       options: {
         // Add any options here
