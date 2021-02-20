@@ -13,7 +13,7 @@ export const Query = graphql`
           bmi
           smoker
           region
-          charges
+          risk
           #children
         }
       }
@@ -32,6 +32,13 @@ const Content = styled.div`
   margin: 0 auto;
   padding: 20px; 
   max-width: 1000px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+
+const PlotContainer = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -81,10 +88,10 @@ function AgeCostScatter(props) {
       for (var row in data) {
           if (data[row].node.smoker === 'no') {
               x.push(data[row].node.age);
-              y.push(data[row].node.charges);
+              y.push(data[row].node.risk);
           } else {
               xs.push(data[row].node.age);
-              ys.push(data[row].node.charges);
+              ys.push(data[row].node.risk);
           }
       }
       setX(x);
@@ -94,8 +101,8 @@ function AgeCostScatter(props) {
   }, []);
 
   return (
-      <div>
-          <div>
+      <PlotContainer>
+
               {data.length > 0 && x.length > 0 && y.length > 0 &&
                   <Plot
                       data={[
@@ -116,24 +123,24 @@ function AgeCostScatter(props) {
                           marker: {color: 'green'},
                       },
                       ]}
+                      useResizeHandler style={{ width: '100%', height: '100%' }}
                       layout={ {
                           width: '100%',
                           xaxis: {
                               title: "Age"
                           },
                           yaxis: {
-                              title: "Charges"
+                              title: "Risk"
                           },
                           autosize: true,
-                          width: 500,
                           legend: {x: 0, y: 50, orientation: "h", yanchor:"top"},
                           title: "Relationship between 'Age' and 'Risk'"
                       } }
                       config={{responsive: true}}
                   />
               }
-          </div>
-      </div>
+
+      </PlotContainer>
   )
 }
 
@@ -153,10 +160,10 @@ function BmiCostScatter(props) {
       for (var row in data) {
           if (data[row].node.smoker === 'no') {
               x.push(data[row].node.bmi);
-              y.push(data[row].node.charges);
+              y.push(data[row].node.risk);
           } else {
               xs.push(data[row].node.bmi);
-              ys.push(data[row].node.charges);
+              ys.push(data[row].node.risk);
           }
       }
       setX(x);
@@ -167,8 +174,8 @@ function BmiCostScatter(props) {
   }, []);
 
   return (
-      <div>
-          <div>
+      <PlotContainer>
+
               {data.length > 0 && x.length > 0 && y.length > 0 &&
                   <Plot
                       data={[
@@ -189,15 +196,15 @@ function BmiCostScatter(props) {
                           marker: {color: 'blue'},
                       },
                       ]}
+                      useResizeHandler style={{ width: '100%', height: '100%' }}
                       layout={ {
                           width: '100%',
                           xaxis: {
                               title: "Bmi"
                           },
                           yaxis: {
-                              title: "Charges"
+                              title: "Risk"
                           },
-                          width: 500,
                           autosize: true,
                           legend: {x: 0, y: 50, orientation: "h", yanchor:"top"},
                           title: "Relationship between 'Body Mass Index' and 'Risk'"
@@ -205,8 +212,8 @@ function BmiCostScatter(props) {
                       config={{responsive: true}}
                   />
               }
-          </div>
-      </div>
+
+      </PlotContainer>
   )
 }
 
@@ -226,10 +233,10 @@ function MaleFemaleBoxPlot(props) {
       for (var row in data) {
           if (data[row].node.smoker === 'no') {
               x.push(data[row].node.sex);
-              y.push(data[row].node.charges);
+              y.push(data[row].node.risk);
           } else {
               xs.push(data[row].node.sex);
-              ys.push(data[row].node.charges);
+              ys.push(data[row].node.risk);
           }
       }
       setX(x);
@@ -240,8 +247,7 @@ function MaleFemaleBoxPlot(props) {
   }, []);
 
   return (
-      <div>
-          <div>
+      <PlotContainer>
               {data.length > 0 && x.length > 0 && y.length > 0 &&
                   <Plot
                       data={[
@@ -260,24 +266,23 @@ function MaleFemaleBoxPlot(props) {
                           boxpoints: 'all',
                       },
                       ]}
+                      useResizeHandler style={{ width: '100%', height: '100%' }}
                       layout={ {
                           width: '100%',
                           xaxis: {
                               title: "Sex"
                           },
                           yaxis: {
-                              title: "Charges"
+                              title: "Risk"
                           },
                           autosize: true,
-                          width: 500,
                           legend: {x: 0, y: 50, orientation: "h", yanchor:"top"},
                           title: "Relationship between 'Sex' and 'Risk'"
                       } }
                       config={{responsive: true}}
                   />
               }
-          </div>
-      </div>
+          </PlotContainer>
   )
 }
 
@@ -285,8 +290,7 @@ function FeatureHeatmap(props) {
   const [data, setData] = useState(props.data);
 
   return (
-      <div>
-          <div>
+      <PlotContainer>
               {data.length > 0 &&
                   <Plot
                       data={[
@@ -303,16 +307,15 @@ function FeatureHeatmap(props) {
                         type: 'heatmap',
                       },
                       ]}
-                      layout={ {
-                          width: 500,
-                          autosize: true,
-                          title: "Heatmap of Features"
+                      useResizeHandler style={{ width: '100%', height: '100%' }}
+                      layout={{
+                        title: "Heatmap of Features",
+                        autosize: true,
                       }}
                       config={{responsive: true}}
                   />
               }
-          </div>
-      </div>
+      </PlotContainer>
   )
 }
 
