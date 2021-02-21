@@ -169,6 +169,18 @@ const Form = () => {
     })
   }
 
+  function formValid() {
+    for (const idx in params) {
+      console.log(params[idx])
+      if (params[idx] === undefined) {
+        console.log("false")
+        return false
+      }
+    }
+    console.log("true")
+    return true
+  }
+
   function submitForm(e, path) {
     setGlobalContext(prev => ({...prev, params: params}))
     e.preventDefault()
@@ -305,7 +317,6 @@ const Form = () => {
             <ResetButton onClick={resetForm}>Reset</ResetButton><Flex/>
             <RandomizeButton onClick={randomizeForm}>Randomize</RandomizeButton>
           </ButtonBar>
-
       </Content>
     </Page>
   )

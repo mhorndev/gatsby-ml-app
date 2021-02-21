@@ -66,6 +66,14 @@ const Result = () => {
   useEffect(() => {
     if (globalContext.params) {
       const params = globalContext.params
+
+      for (const idx in params) {
+        if (params[idx] === undefined) {
+          setGlobalContext(prev => ({...prev, params: undefined}))
+          return
+        }
+      }
+
       const url = 'https://api-ahrjj7evdq-uc.a.run.app/'
 
       const options = {
