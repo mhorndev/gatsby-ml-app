@@ -51,18 +51,22 @@ const Heading = styled.h1`
 `
 
 const Analysis = ({ data }) => {
+  if(!data) return null
   return (
     <Page>
       <Content>
         <Heading>Analysis</Heading>
-        {data && (
-          <>
-            <FeatureHeatmap data={data} />
-            <AgeCostScatter data={data} />
-            <BmiCostScatter data={data} />
-            <MaleFemaleBoxPlot data={data} />
-          </>
-        )}
+        { data 
+            ? 
+              <>
+                <FeatureHeatmap data={data} />
+                <AgeCostScatter data={data} />
+                <BmiCostScatter data={data} />
+                <MaleFemaleBoxPlot data={data} />
+              </> 
+            : 
+              <>Nope</> 
+        }
       </Content>
     </Page>
   )
@@ -275,8 +279,8 @@ function MaleFemaleBoxPlot({ data }) {
 }
 
 function FeatureHeatmap({ data }) {
-  const [x, setX] = useState([])
-  const [y, setY] = useState([])
+  const [x, setX] = useState(undefined)
+  const [y, setY] = useState(undefined)
 
   useEffect(() => {
     const edges = data.allInsuranceCsv.edges
@@ -287,7 +291,7 @@ function FeatureHeatmap({ data }) {
 
   return (
     <PlotContainer>
-      {data && (
+      {x && y ?
         <Plot
           data={[
             {
@@ -365,7 +369,9 @@ function FeatureHeatmap({ data }) {
           style={{ width: "100%", height: "100%" }}
           layout={{ title: "Heatmap of Features" }}
         />
-      )}
+      :
+        <></>
+      }
     </PlotContainer>
   )
 }
