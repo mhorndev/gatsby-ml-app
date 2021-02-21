@@ -52,9 +52,7 @@ const Transition = ({children}) => {
   }
 
   function onExitComplete() {
-    if (globalContext.url !== "/") {
-      setGlobalContext(prev => ({...prev, navbar: true}))
-    }
+    setGlobalContext(prev => ({...prev, transitionComplete: true}))
   }
 
   return (

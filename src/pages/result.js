@@ -103,10 +103,6 @@ const Result = () => {
     return () => clearInterval(interval);
   }, [])
 
-  useEffect(() => {
-
-  }, [result])
-
   return (
     <Page>
       <Content>

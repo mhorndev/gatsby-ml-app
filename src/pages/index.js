@@ -47,7 +47,7 @@ const Button = styled.button`
 
 
 const Home = () => {
-  const {setGlobalContext} = useContext(Context)
+  const {globalContext, setGlobalContext} = useContext(Context)
 
   function onClick(e,path) {
     e.preventDefault()

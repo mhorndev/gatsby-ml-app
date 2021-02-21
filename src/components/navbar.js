@@ -43,7 +43,7 @@ const Navbar = () => {
   return (
     <Container
       initial={{y: -100}}
-      animate={{ y: globalContext.navbar ? 0 : -100 }}
+      animate={{ y: globalContext.transitionComplete ? 0 : -100 }}
       transition={{ duration: .25 }}
     >
       <Content>

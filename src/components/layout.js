@@ -8,22 +8,18 @@ import Transition from "./transition"
 import { Helmet } from 'react-helmet'
 
 const Layout = ({children, location}) => {
-  const [globalContext,setGlobalContext] = useState({})
+  const [globalContext,setGlobalContext] = useState({
+    transitionComplete: true
+  })
 
   useEffect(() => {
+    if (!globalContext.path) return
     let next = routes.findIndex(obj => obj.path === globalContext.path)
     let curr = routes.findIndex(obj => obj.path === location.pathname)
     setGlobalContext(prev => ({...prev, direction: next > curr ? 1 : -1}))
-    
-    setTimeout(function(){ 
-      setGlobalContext(prev => ({...prev, navbar: false}))
-      setTimeout(function(){ 
-        navigate(globalContext.path) 
-        setTimeout(function(){ 
-          setGlobalContext(prev => ({...prev, navbar: true}))
-        }, 500)
-      }, 500)
-    }, 500)
+
+    setGlobalContext(prev => ({...prev, transitionComplete: false}))
+    setTimeout(function() { navigate(globalContext.path) }, 500)
 
   }, [globalContext.path, location.pathname])
 

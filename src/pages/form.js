@@ -18,7 +18,7 @@ const Content = styled.div`
 `
 
 const Heading = styled.h1`
-  margin-top: 2em;
+  margin-top: 3em;
 `
 
 const Container = styled.div`
@@ -100,7 +100,7 @@ const Params = {
 
 const Form = () => {
   const [params,setParams] = useState(Params)  
-  const {setGlobalContext} = useContext(Context)
+  const {globalContext, setGlobalContext} = useContext(Context)
 
   function formatHeight() {
     if (params.height === undefined) return

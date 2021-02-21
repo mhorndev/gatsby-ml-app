@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useContext } from "react"
 import styled from "styled-components"
 import { graphql } from "gatsby"
 import Plot from "react-plotly.js"
+import { Context } from "../components/context"
 
 export const Query = graphql`
   query {
@@ -47,11 +48,14 @@ const PlotContainer = styled.div`
 `
 
 const Heading = styled.h1`
-  margin-top: 2em;
+  margin-top: 3em;
 `
 
 const Analysis = ({ data }) => {
+  const {globalContext,setGlobalContext} = useContext(Context)
+
   if(!data) return null
+
   return (
     <Page>
       <Content>
