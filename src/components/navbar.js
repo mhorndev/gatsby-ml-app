@@ -1,4 +1,4 @@
-import React, { useContext, useState }  from "react"
+import React, { useContext }  from "react"
 import styled from "styled-components"
 import routes from "../components/routes"
 import { Context } from "./context"
@@ -32,9 +32,8 @@ const Link = styled.a`
   &:hover { color: #BF00FF; }
 `
 
-const Navbar = ({}) => {
+const Navbar = () => {
   const {globalContext,setGlobalContext} = useContext(Context)
-  const [visible,setVisible] = useState(false)
 
   function onClick(e,path) {
     e.preventDefault()

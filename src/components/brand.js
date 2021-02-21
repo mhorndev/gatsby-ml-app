@@ -9,7 +9,7 @@ const Text = styled(motion.div)`
 
 const Brand = ({cbClick}) => {
   const [hovered,setHovered] = useState(false)
-  const {globalContext,setGlobalContext} = useContext(Context)
+  const {setGlobalContext} = useContext(Context)
 
   function onClick(e,path) {
     e.preventDefault()
@@ -18,13 +18,17 @@ const Brand = ({cbClick}) => {
 
   return (
     <div id="brand"
+      role="button"
+      tabIndex={0}
       onClick={e => onClick(e,"/")}
       onMouseEnter={() => { setHovered(true) }}
       onMouseLeave={() => { setHovered(false) }}
+      onKeyDown={e => {return}}
       style={{
         display: "flex", 
         cursor: "pointer",
-        alignItems: "center"
+        alignItems: "center",
+        outline: "none"
       }}
     >
       <svg 

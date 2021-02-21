@@ -1,4 +1,4 @@
-import { replace } from "gatsby"
+import { motion } from "framer-motion"
 import React, { useContext, useEffect, useState }  from "react"
 import styled from "styled-components"
 import { Context } from "../components/context"
@@ -22,19 +22,23 @@ const Content = styled.div`
 `
 
 const Heading = styled.h1`
-  margin-top: 2em;
+  color: #000; 
 `
 
-const Paragraph = styled.p`
+const ApiResult = styled.div`
   margin: 10px;
   max-width: 400px;
   color: #666;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `
 
 const Buttons = styled.div`
 `
 
-const Button = styled.button`
+const Button = styled(motion.button)`
   margin: 10px;
   color: #FFF; 
   background-color: #000;
@@ -48,11 +52,13 @@ const Button = styled.button`
   }
 `
 
-const Result = ({}) => {
+const Result = () => {
   const {globalContext,setGlobalContext} = useContext(Context)
   const [result,setResult] = useState(null)
+  const [count,setCount] = useState(0)
+  const [message,setMessage] = useState(null)
 
-  function backToForm(e,path) {
+  function onClick(e,path) {
     e.preventDefault()
     setGlobalContext(prev => ({...prev, path: path}))
   }
@@ -79,7 +85,6 @@ const Result = ({}) => {
       .then(response => {
         response = response.json()
         response.then(function(response) {
-          console.log(response.cost)
           setResult({
             cost: "$"+response.cost.toFixed(2), 
             accuracy: null
@@ -87,20 +92,93 @@ const Result = ({}) => {
         })
       })
     }
+  }, [globalContext.params])
+
+  useEffect(() => {
+    setMessage(messages[Math.floor(Math.random() * Math.floor(messages.length))])
+    const interval = setInterval(() => {
+      setCount(prev => prev + 1)
+      setMessage(messages[Math.floor(Math.random() * Math.floor(messages.length))])
+    }, 3000);
+    return () => clearInterval(interval);
   }, [])
+
+  useEffect(() => {
+
+  }, [result])
 
   return (
     <Page>
       <Content>
-        <Heading>Results:</Heading>
-        <Paragraph>{result ? result.cost : "Contacting Api"}</Paragraph>
-        <Buttons>
-          <Button href="/form" onClick={e => backToForm(e,"/form")}>Run It Back</Button>
-          <Button href="/form" onClick={e => backToForm(e,"/analysis")}>See Analysis</Button>
-        </Buttons>
+        {globalContext.params 
+        ? 
+          < >
+            {(result && count >= 3) ?
+              < >
+                <ApiResult>
+                  <Heading>Result:</Heading>
+                  {result.cost}
+                </ApiResult>
+                <Buttons>
+                  <Button href="/form" onClick={e => onClick(e,"/form")}>Run it Back</Button>
+                  <Button href="/form" onClick={e => onClick(e,"/analysis")}>See Analysis</Button>
+                </Buttons>
+              </>
+            :
+              < >
+                <div className="spinner-grow" role="status"/>
+                <div>{message}</div>
+              </>
+            }
+          </>
+        : 
+          < >
+            <Heading>Fugedabodit</Heading>
+            <p>Nothing to see here. Try entering some parameters first.</p>
+            <Button href="/form" onClick={e => onClick(e,"/form")}>Go to Form</Button>
+          </>
+        }
       </Content>
     </Page>
   )
 }
+
+const messages = [
+  "Reticulating splines...",
+  "Generating witty dialog...",
+  "Swapping time and space...",
+  "Spinning violently around the y-axis...",
+  "Bending the spoon...",
+  "Counting backwards from Infinity",
+  "Adjusting flux capacitor...",
+  "Follow the white rabbit",
+  "Spinning the wheel of fortune...",
+  "We need more dilithium crystals",
+  "Connecting Neurotoxin Storage Tank...",
+  "Spinning the hamster...",
+  "I think I am, therefore, I am. I think.",
+  "Dividing by zero...",
+  "If I’m not back in five minutes, just wait longer.",
+  "Simulating traveling salesman...",
+  "Proving P=NP...",
+  "Twiddling thumbs...",
+  "Trying to sort in O(n)...",
+  "Switching to the latest JS framework...",
+  "Waiting for Daenerys say all her titles...",
+  "Feel free to spin in your chair",
+  "Mining some bitcoins...",
+  "Alt-F4 speeds things up.",
+  "Optimizing the optimizer...",
+  "Updating Updater...",
+  "Downloading Downloader...",
+  "Running with scissors...",
+  "Waking up the minions",
+  "You are number 2843684714 in the queue",
+  "Grabbing extra minions",
+  "Doing the heavy lifting",
+  "Still faster than Windows update",
+  "Debugging the Debugger...",
+  "Deleting hidden porn from your computer"
+]
 
 export default Result

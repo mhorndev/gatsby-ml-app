@@ -37,10 +37,6 @@ const Control = styled.div`
   flex: 4;
 `
 
-const Group = styled.div`
-  width: 100%;
-`
-
 const ButtonBar = styled.div`
   display: flex;
   flex-direction: row;
@@ -102,9 +98,9 @@ const Params = {
   smoker: undefined,
 }
 
-const Form = ({}) => {
+const Form = () => {
   const [params,setParams] = useState(Params)  
-  const {globalContext,setGlobalContext} = useContext(Context)
+  const {setGlobalContext} = useContext(Context)
 
   function formatHeight() {
     if (params.height === undefined) return
@@ -140,8 +136,6 @@ const Form = ({}) => {
 
   function formatSmoker() {
     if (params.smoker === undefined) return
-    console.log("not undefined")
-    console.log(params.smoker)
     return (params.smoker > 0 ? "Y" : "N")
   }
 
@@ -152,14 +146,14 @@ const Form = ({}) => {
 
   useEffect(() => {
     if (params.height && params.weight) {
-      setParams({...params, 
+      setParams(p => ({...p, 
         bmi: ((params.weight/params.height/params.height)*703).toFixed(2)
       })
-    }
-  }, [params.height,params.weight])
+      )}
+  }, [params.height, params.weight])
 
   function resetForm() {
-    setParams(Params)
+    setParams(p => Params)
   }
 
   function randomizeForm() {
@@ -181,7 +175,6 @@ const Form = ({}) => {
     setGlobalContext(prev => ({...prev, path: path}))
   }
   
-
   return (
     <Page>
       <Content>
@@ -210,7 +203,7 @@ const Form = ({}) => {
             </Label>
             <Control>
               <input 
-                type="range" class="form-range" id="heightRange" min="48" max="84" value={params.height || 0}
+                type="range" className="form-range" id="heightRange" min="48" max="84" value={params.height || 0}
                 onChange={e => setParams({...params, height: e.target.value})}
                 onMouseDown={e => {if (params.height === undefined){setParams({...params, height: 48})}}}
               />
@@ -225,7 +218,7 @@ const Form = ({}) => {
             </Label>
             <Control>
               <input 
-                type="range" class="form-range" id="weightRange" min="75" max="300" value={params.weight || 0}
+                type="range" className="form-range" id="weightRange" min="75" max="300" value={params.weight || 0}
                 onChange={e => setParams({...params, weight: e.target.value})}
                 onMouseDown={e => {if (params.weight === undefined){setParams({...params, weight: 75})}}}
               />
@@ -240,7 +233,7 @@ const Form = ({}) => {
             </Label>
             <Control>
               <input 
-                type="range" class="form-range" id="bmiRange" min="10" max="90" value={params.bmi || 0} disabled
+                type="range" className="form-range" id="bmiRange" min="10" max="90" value={params.bmi || 0} disabled
               />
             </Control>
           </Container>
@@ -253,7 +246,7 @@ const Form = ({}) => {
             </Label>
             <Control>
               <input 
-                type="range" class="form-range" id="childrenRange" min="0" max="7" value={params.children || 0}
+                type="range" className="form-range" id="childrenRange" min="0" max="7" value={params.children || 0}
                 onChange={e => setParams({...params, children: e.target.value})}
                 onMouseDown={e => {if (params.children === undefined){setParams({...params, children: 0})}}}
               />
@@ -283,7 +276,7 @@ const Form = ({}) => {
             </Label>
             <Control>
               <input 
-                type="range" class="form-range" id="sexRange" min="0" max="1" value={params.sex || 0}
+                type="range" className="form-range" id="sexRange" min="0" max="1" value={params.sex || 0}
                 onChange={e => setParams({...params, sex: e.target.value})}
                 onMouseDown={e => {if (params.sex === undefined){setParams({...params, sex: 0})}}}
               />

@@ -20,7 +20,7 @@ const Heading = styled.h1`
   margin-top: 1em;
 `
 
-const NotFound = ({}) => {
+const NotFound = () => {
   return (
     <Page>
       <Content>
