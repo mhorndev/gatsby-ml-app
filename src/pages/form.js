@@ -7,9 +7,9 @@ const Page = styled.div`
   top: 0; bottom: 0;
   left: 0; right: 0;
   overflow-y: scroll;
-  -ms-overflow-style: none;  /* Internet Explorer 10+ */
-  scrollbar-width: none;  /* Firefox */
-  &::-webkit-scrollbar { 
+  -ms-overflow-style: none; /* IE 10+ */
+  scrollbar-width: none;    /* Firefox */
+  &::-webkit-scrollbar {    /* Chrome */
     display: none;
   }
 `
@@ -100,9 +100,9 @@ const Params = {
   bmi: undefined,
   children: undefined,
   state: undefined,
-  region: undefined,
   sex: undefined,
   smoker: undefined,
+  region: 1,
 }
 
 const Form = () => {
@@ -189,6 +189,7 @@ const Form = () => {
   }
 
   function submitForm(e, path) {
+    console.log(params)
     setGlobalContext(prev => ({...prev, params: params}))
     e.preventDefault()
     setGlobalContext(prev => ({...prev, path: path}))
