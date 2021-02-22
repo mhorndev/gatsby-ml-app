@@ -1,5 +1,6 @@
 import React, { useContext }  from "react"
 import styled from "styled-components"
+import { motion } from "framer-motion"
 import { Context } from "../components/context"
 import { GrGatsbyjs } from 'react-icons/gr/';
 import { GrReactjs } from 'react-icons/gr/';
@@ -76,7 +77,9 @@ const Home = () => {
         <Paragraph>This machine learning application is a medical cost risk analysis designed to
           provide an estimated risk cost based on input paramaters.
         </Paragraph>
+
         <Button href="/form" onClick={e => onClick(e,"/form")}>Let's get started</Button>
+
         <hr/>
         <Icons>
           <GrReactjs size={28} fill="#61dafb"/>

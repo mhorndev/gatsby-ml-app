@@ -6,7 +6,12 @@ const Page = styled.div`
   position: fixed;
   top: 0; bottom: 0;
   left: 0; right: 0;
-  overflow: hidden;
+  overflow-y: scroll;
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+  &::-webkit-scrollbar { 
+    display: none;
+  }
 `
 
 const Content = styled.div`
@@ -24,6 +29,8 @@ const Heading = styled.h1`
 const Container = styled.div`
   display: flex;
   flex-direction: row;
+  padding-left: 15px;
+  padding-right: 15px;
   @media (max-width: 768px) {
     flex-direction: column;
   }
